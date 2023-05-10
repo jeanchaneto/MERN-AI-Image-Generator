@@ -15,7 +15,7 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
-    e.prevent.default();
+    e.preventDefault();
     if(form.prompt && form.photo) {
       setLoading(true);
 
@@ -23,11 +23,12 @@ const CreatePost = () => {
         const response = await fetch('http://localhost:8080/api/v1/post', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application.json',
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(form)
+          body: JSON.stringify({...form})
         })
         await response.json();
+        alert('Successfuly shared!')
         navigate('/');
       } catch (error) {
         alert(error);
