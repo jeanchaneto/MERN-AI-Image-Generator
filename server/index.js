@@ -4,7 +4,7 @@ import cors from 'cors';
 
 import connectToDB from "./mongodb/connect.js";
 import postRoutes from "./routes/postRoutes.js";
-import imageGenRoutes from "./routes/ImageGenRoutes.js"
+import imageGenRoutes from "./routes/imageGenRoutes.js"
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ app.use(express.json({ limit: '50mb'}));
 
 //Create API endpoints that frontend can connect to
 app.use('/api/v1/post', postRoutes);
-app.use('/api/v1/imageGenerator', imageGenRoutes);
+app.use('/api/v1/imagegenerator', imageGenRoutes);
 
 app.get('/', async (req, res) => {
     res.send('Image gen Ok')

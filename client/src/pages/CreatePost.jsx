@@ -2,7 +2,7 @@ import { useState } from "react";
 import { preview } from "../assets";
 import { useNavigate } from "react-router-dom";
 import { FormField, Loader } from "../components";
-import { getRandomPrompt } from "../utils"
+import { getRandomPrompt } from "../utils";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -19,19 +19,43 @@ const CreatePost = () => {
   const changeHandler = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   };
 
   const surpriseMeHandler = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
     setForm({
       ...form,
-      prompt: randomPrompt
-    })
+      prompt: randomPrompt,
+    });
   };
 
-  const generateImage = () => {};
+  const generateImage = async () => {
+    if (form.prompt) {
+      try {
+        setGeneratingImg(true);
+        const response = await fetch(
+          "http://localhost:8080/api/v1/imagegenerator",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ prompt: form.prompt }),
+          }
+        );
+        const data = await response.json();
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+      } catch (error) {
+        alert(error);
+      } finally {
+        setGeneratingImg(false);
+      }
+    } else {
+      alert("Please enter a prompt");
+    }
+  };
 
   return (
     <section className=" max-w-7xl mx-auto ">
