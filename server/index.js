@@ -4,7 +4,7 @@ import cors from 'cors';
 
 import connectToDB from "./mongodb/connect.js";
 import postRoutes from "./routes/postRoutes.js";
-import imageGenRoutes from "./routes/imageGenRoutes.js"
+import imageGenRoutes from "./routes/imageGenRoutes.js";
 
 dotenv.config();
 
